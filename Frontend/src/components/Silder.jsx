@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
-import { Clock, Contact2, Rat, Star, Trash } from "lucide-react"
+import { Clock, Contact2, Star, Trash } from "lucide-react"
+
 
 const Silder = () => {
     return (
@@ -27,7 +28,7 @@ const Silder = () => {
                 </div>
             </div>
 
-            <button className='btn btn-primary w-44'>Nouveau conctact</button>
+            <Link to="/add" className='btn btn-primary w-44'>Nouveau contact</Link>
         </div>
     )
 }

@@ -4,8 +4,19 @@ import profil1 from "../assets/profil-icon.png";
 import profil2 from "../assets/profil-icon2.png";
 import profil3 from "../assets/profil-icon3.png";
 import profil4 from "../assets/profil-icon4.png";
+import { Link, useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate('/')
+    }
+  }, [])
+
   return (
     <div>
       <Header />
@@ -35,29 +46,35 @@ const Home = () => {
           <h2 className='text-2xl text-slate-900 font-bold my-5'>Contacts</h2>
 
           <div className='flex flex-col gap-4'>
-            <div className='flex gap-3'>
-              <img src={profil1} alt={`profil`} />
-              <div>
-                <h4>Sangaré Fatim</h4>
-                <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+            <Link to="/edit">
+              <div className='flex gap-3'>
+                <img src={profil1} alt={`profil`} />
+                <div>
+                  <h4>Sangaré Fatim</h4>
+                  <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+                </div>
               </div>
-            </div>
+            </Link>
 
-            <div className='flex gap-3'>
-              <img src={profil2} alt={`profil`} />
-              <div>
-                <h4>Traoré Allassane</h4>
-                <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+            <Link to="/edit">
+              <div className='flex gap-3'>
+                <img src={profil2} alt={`profil`} />
+                <div>
+                  <h4>Traoré Allassane</h4>
+                  <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+                </div>
               </div>
-            </div>
+            </Link>
 
-            <div className='flex gap-3'>
-              <img src={profil3} alt={`profil`} />
-              <div>
-                <h4>Koné Korotoum</h4>
-                <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+            <Link to="/edit">
+              <div className='flex gap-3'>
+                <img src={profil3} alt={`profil`} />
+                <div>
+                  <h4>Koné Korotoum</h4>
+                  <span className='text-sm text-indigo-400'>fatim@gmail.com</span>
+                </div>
               </div>
-            </div>
+            </Link>
 
             <div className='flex gap-3'>
               <img src={profil4} alt={`profil`} />

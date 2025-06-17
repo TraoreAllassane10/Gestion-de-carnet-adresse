@@ -1,20 +1,22 @@
-import React from 'react'
-import Navbar from './Navbar'
-import { Link } from 'react-router';
-
+import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from './../context/AuthContext';
 
 const Header = () => {
+  const {logout} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  }
+
   return (
     <div className='flex justify-between p-6 border-b'>
-      {/* <div>
-            <a  href="/"><span>Carneto</span></a>
-        </div>
-
-        <Navbar/> */}
 
       <div className="navbar bg-base-100 shadow-sm">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl">Carneto</Link>
+          <Link to="/home" className="btn btn-ghost text-xl">Carneto</Link>
         </div>
         <div className="flex gap-2">
           <input type="text" placeholder="Recherche..." className="input input-bordered w-24 md:w-auto" />
@@ -36,7 +38,7 @@ const Header = () => {
                 </a>
               </li>
               <li><a>Parametres</a></li>
-              <li><a>Deconnexion</a></li>
+              <li><a onClick={handleLogout}>Deconnexion</a></li>
             </ul>
           </div>
         </div>
