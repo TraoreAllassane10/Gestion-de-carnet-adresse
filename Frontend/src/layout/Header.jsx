@@ -1,50 +1,70 @@
+
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from './../context/AuthContext';
 
 const Header = () => {
-  const {logout} = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate('/');
-  }
+  };
 
   return (
-    <div className='flex justify-between p-6 border-b'>
-
-      <div className="navbar bg-base-100 shadow-sm">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="navbar px-6 py-4 max-w-7xl mx-auto">
+        {/* Logo */}
         <div className="flex-1">
-          <Link to="/home" className="btn btn-ghost text-xl">Carneto</Link>
+          <Link to="/home" className="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition">
+            Carneto
+          </Link>
         </div>
-        <div className="flex gap-2">
-          <input type="text" placeholder="Recherche..." className="input input-bordered w-24 md:w-auto" />
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Parametres</a></li>
-              <li><a onClick={handleLogout}>Deconnexion</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
-export default Header
+        {/* Recherche + Avatar */}
+        {user && (
+          <div className="flex items-center gap-4">
+            {/* Champ recherche */}
+            <input
+              type="text"
+              placeholder="Recherche..."
+              className="input input-sm input-bordered w-36 md:w-64 rounded-full"
+            />
+
+            {/* Avatar + Dropdown */}
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 h-10 rounded-full ring ring-indigo-300 ring-offset-base-100 ring-offset-2">
+                  <img
+                    alt="Photo de profil"
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white rounded-box w-52"
+              >
+                <li>
+                  <Link to="/profile" className="justify-between">
+                    Profil
+                    <span className="badge badge-info text-white">New</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/settings">Paramètres</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Déconnexion</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;

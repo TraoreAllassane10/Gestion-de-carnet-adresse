@@ -14,52 +14,66 @@ const Edit = () => {
         <Silder />
 
         {/* Content */}
-        <div className='w-2/4 mr-10'>
-          <form action="" className=''>
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-10 gap-4">
-              <legend className="fieldset-legend">Modification d'un contact</legend>
-              <label className="label">Nom</label>
-              <input type="text" value="Traore" className="input w-full" />
+        <div className="flex flex-col md:flex-row gap-10 w-full px-4 py-8">
+          {/* Formulaire de modification */}
+          <div className="w-full md:w-1/2">
+            <form> 
+              <fieldset className="bg-white border border-slate-200 rounded-xl shadow p-8 space-y-5">
+                <legend className="text-lg font-semibold text-slate-700 mb-4">
+                  Modification du contact
+                </legend>
 
-              <label className="label">Prenom</label>
-              <input type="text" value="Allassane" className="input w-full" />
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Nom</label>
+                  <input type="text" className="input input-bordered w-full" value="Traore" required />
+                </div>
 
-              <label className="label">Email</label>
-              <input type="text" value="traore@gmail.com" className="input w-full" />
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Prénom</label>
+                  <input type="text" className="input input-bordered w-full" value="Allassane" required />
+                </div>
 
-              <label className="label">Numéro de telephone</label>
-              <input type="text" value="0564639933" className="input w-full" />
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                  <input type="email" className="input input-bordered w-full" value="traore@gmail.com" required />
+                </div>
 
-              <button className="btn btn-primary">Modifier</button>
-            </fieldset>
-          </form>
-        </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Numéro de téléphone</label>
+                  <input type="tel" className="input input-bordered w-full" value="0564639933" required />
+                </div>
 
-        <div className='2/4 flex flex-col justify-between'>
-          <div className='flex flex-col items-center gap-1'>
-            <img src={profil} alt="profil" width={100} height={100} />
-            <span>Traore Allassane</span>
-            <span className='text-sm text-indigo-400'>traore@gmail.com</span>
-            <span className='text-sm'>+225 0564639933</span>
+                <button type="submit" className="btn btn-primary w-full mt-4">Modifier</button>
+              </fieldset>
+            </form>
           </div>
 
-          <div>
-            <h3 className='text-lg font-bold mb-2'>Actions</h3>
-
-            <div className='flex flex-col gap-3'>
-              <div className='flex gap-1'>
-                <MessageCircleIcon />
-                <Link>Envoyer un e-mail</Link>
-              </div>
-
-              <div className='flex gap-1'>
-                <Trash />
-                <Link>Supprimer le contact</Link>
-              </div>
+          {/* Profil et actions */}
+          <div className="w-full md:w-1/2 flex flex-col justify-between">
+            <div className="flex flex-col items-center gap-2 mb-6">
+              <img src={profil} alt="profil" className="w-24 h-24 rounded-full object-cover shadow" />
+              <h3 className="text-lg font-bold">Traore Allassane</h3>
+              <span className="text-indigo-500">traore@gmail.com</span>
+              <span className="text-slate-600">+225 0564639933</span>
             </div>
 
+            <div>
+              <h4 className="text-md font-semibold text-slate-800 mb-3">Actions</h4>
+              <div className="flex flex-col gap-4">
+                <Link to="/send-email" className="flex items-center gap-2 hover:text-indigo-600">
+                  <MessageCircleIcon className="w-5 h-5" />
+                  <span>Envoyer un e-mail</span>
+                </Link>
+
+                <button className="flex items-center gap-2 text-red-500 hover:text-red-600">
+                  <Trash className="w-5 h-5" />
+                  <span>Supprimer le contact</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+
       </section>
 
 

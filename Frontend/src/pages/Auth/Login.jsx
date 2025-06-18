@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../layout/Header'
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
@@ -26,31 +26,66 @@ const login = () => {
     }, [])
 
     return (
+
         <div>
-            {loading ? (<Loading />) : (<div>
-                <Header />
+            {loading ? (
+                <Loading />
+            ) : (
+                <div>
+                    <Header />
 
-                <div className='max-w-2xl mx-auto'>
-                    <h1 className='text-2xl text-center my-10'>Connectez-vous à votre compte</h1>
+                    <div className="max-w-md mx-auto px-4 py-10">
+                        <h1 className="text-3xl font-bold text-center text-slate-800 mb-6">
+                            Connexion à votre compte
+                        </h1>
 
-                    <form onSubmit={handleLogin}>
-                        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-10 gap-4">
-                            <legend className="fieldset-legend">Connexion</legend>
+                        <form onSubmit={handleLogin} className="space-y-6 bg-white shadow-lg rounded-xl p-8 border border-slate-200">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input
+                                    type="email"
+                                    className="input input-bordered w-full"
+                                    placeholder="Entrer votre email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
 
-                            <label className="label">Email</label>
-                            <input type="email" className="input w-full" placeholder="Entrer votre email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Mot de passe</label>
+                                <input
+                                    type="password"
+                                    className="input input-bordered w-full"
+                                    placeholder="Entrer votre mot de passe"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <div className="text-right mt-1">
+                                    <a href="#" className="text-sm text-indigo-600 hover:underline">Mot de passe oublié ?</a>
+                                </div>
+                            </div>
 
-                            <label className="label">Mot de passe</label>
-                            <input type="text" className="input w-full" placeholder="Entrer votre mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <a href="">Mot de passe oublié ?</a>
+                            <button
+                                type="submit"
+                                className="btn btn-primary w-full font-semibold text-white"
+                            >
+                                Connexion
+                            </button>
 
-                            <button type='submit' className="btn btn-primary">Connexion</button>
-                            <span>Vous n'avez pas de compte ? <a href="/signup">Créer en un</a></span>
-                        </fieldset>
-                    </form>
+                            <p className="text-center text-sm text-slate-600">
+                                Vous n'avez pas de compte ?{" "}
+                                <a href="/signup" className="text-indigo-600 hover:underline">
+                                    Créez-en un
+                                </a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
-            </div>)}
+            )}
         </div>
+
     )
 }
 

@@ -1,36 +1,53 @@
 import { Link } from 'react-router';
-import { Clock, Contact2, Star, Trash } from "lucide-react"
-
+import { Clock, Contact2, Star, Trash } from "lucide-react";
 
 const Silder = () => {
-    return (
-        <div className='flex flex-col justify-between w-1/4'>
-            <div>
-                <h4>Contacts</h4>
+  return (
+    <aside className="w-full md:w-1/4 px-4 py-6 bg-white rounded-xl shadow-sm">
+      <h3 className="text-lg font-semibold text-slate-700 mb-4">Menu</h3>
 
-                <div className='flex flex-col gap-4 mt-4'>
+      <nav className="flex flex-col gap-2 mb-6">
+        <Link
+          to="/home"
+          className="flex items-center gap-3 text-slate-700 hover:bg-indigo-100 hover:text-indigo-600 px-3 py-2 rounded-lg transition"
+        >
+          <Contact2 size={18} />
+          <span>Contacts</span>
+        </Link>
 
-                    <div className='flex gap-2 place-items-center hover:bg-slate-300 hover:rounded-lg w-40 p-1 transition'>
-                        <Contact2 /><Link to="/home">Contacts</Link>
-                    </div>
+        <Link
+          to="/favoris"
+          className="flex items-center gap-3 text-slate-700 hover:bg-indigo-100 hover:text-indigo-600 px-3 py-2 rounded-lg transition"
+        >
+          <Star size={18} />
+          <span>Favoris</span>
+        </Link>
 
-                    <div className='flex gap-2 place-items-center hover:bg-slate-300 hover:rounded-lg w-40 p-1 transition'>
-                        <Star /><Link to="/favoris">Favoris</Link>
-                    </div>
+        <Link
+          to="/recent"
+          className="flex items-center gap-3 text-slate-700 hover:bg-indigo-100 hover:text-indigo-600 px-3 py-2 rounded-lg transition"
+        >
+          <Clock size={18} />
+          <span>Récents</span>
+        </Link>
 
-                    <div className='flex gap-2 place-items-center hover:bg-slate-300 hover:rounded-lg w-40 p-1 transition'>
-                        <Clock /><Link to="/recent">Récents</Link>
-                    </div>
+        <Link
+          to="/corbeille"
+          className="flex items-center gap-3 text-slate-700 hover:bg-indigo-100 hover:text-indigo-600 px-3 py-2 rounded-lg transition"
+        >
+          <Trash size={18} />
+          <span>Corbeille</span>
+        </Link>
+      </nav>
 
-                    <div className='flex gap-2 place-items-center hover:bg-slate-300 hover:rounded-lg w-40 p-1 transition'>
-                        <Trash /><Link to="/corbeille">Corbeille</Link>
-                    </div>
-                </div>
-            </div>
+      <Link
+        to="/add"
+        className="btn btn-primary w-full rounded-full text-white font-semibold tracking-wide"
+      >
+        + Nouveau contact
+      </Link>
+    </aside>
+  );
+};
 
-            <Link to="/add" className='btn btn-primary w-44'>Nouveau contact</Link>
-        </div>
-    )
-}
-
-export default Silder
+export default Silder;

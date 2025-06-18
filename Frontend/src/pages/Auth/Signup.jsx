@@ -29,32 +29,79 @@ const Signup = () => {
 
   return (
     <div>
-      {loading ? (<Loading />) : (<div>
-        <Header />
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <Header />
 
-        <div className='max-w-2xl mx-auto'>
-          <h1 className='text-2xl text-center my-10'>Créer votre compte</h1>
+          <div className="max-w-md mx-auto px-4 py-10">
+            <h1 className="text-3xl font-bold text-center text-slate-800 mb-6">
+              Créer votre compte
+            </h1>
 
-          <form onSubmit={handleRegister}>
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-10 gap-4">
-              <legend className="fieldset-legend">Creation de compte</legend>
+            <form onSubmit={handleRegister} className="space-y-6 bg-white shadow-lg rounded-xl p-8 border border-slate-200">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Nom complet
+                </label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  placeholder="Entrer votre nom ou pseudo"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label className="label">Nom complet</label>
-              <input type="text" className="input w-full" placeholder="Entrer votre nom compte ou pseudo" value={name} onChange={(e) => setName(e.target.value)} />
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="input input-bordered w-full"
+                  placeholder="Entrer votre email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label className="label">Email</label>
-              <input type="text" className="input w-full" placeholder="Entrer votre email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  className="input input-bordered w-full"
+                  placeholder="Entrer votre mot de passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label className="label">Mote de passe</label>
-              <input type="text" className="input w-full" placeholder="Entrer votre mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <button
+                type="submit"
+                className="btn btn-primary w-full font-semibold text-white"
+              >
+                S'inscrire
+              </button>
 
-              <button type='submit' className="btn btn-primary">Inscription</button>
-              <span>Vous avez déjà un compte ? <Link to="/">Connectez-vous</Link></span>
-            </fieldset>
-          </form>
+              <p className="text-center text-sm text-slate-600">
+                Vous avez déjà un compte ?{" "}
+                <Link to="/" className="text-indigo-600 hover:underline">
+                  Connectez-vous
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
-      </div>)}
+      )}
     </div>
+
   )
 }
 
