@@ -4,33 +4,35 @@ const jwt = require("jsonwebtoken");
 const PrivateKey = require("../auth");
 
 const create = async (data) => {
-
-  const email = data.email
-  const verifiedEmail = await User.findOne({ email });
   let response;
 
-  if (verifiedEmail) {
-    response = { message: "Cet utilisateur existe déjà" };
-    return response;
-  }
-
-  password = bcrypt.hashSync(data.password, 10);
-
   try {
+
+    const email = data.email;
     const name = data.name;
-    const user = await User.create({name, email, password});
 
-    if (user)
-    {
-      response = { message: "Utilisateur crée", data: user };
-      return response;
-    }
-    else
-    {
-      response = { message: "Erreur lors de la creation de l'utilisateur" };
+    // Vérification si l'utilisateur a un compte
+    const verifiedEmail = await User.findOne({ email });
+
+    // S'il a déjà un compte
+    if (verifiedEmail) {
+      response = { message: "Cet utilisateur existe déjà" };
       return response;
     }
 
+    // Cryptage de son mot de passe
+    password = bcrypt.hashSync(data.password, 10);
+
+    // Creation de l'utilisateur 
+    const user = await User.create({ name, email, password });
+
+    if (user) {
+      response = {success : true, message: "Utilisateur crée", data: user };
+      return response;
+    } else {
+      response = {success : false,  message: "Erreur lors de la creation de l'utilisateur" };
+      return response;
+    }
   } catch (error) {
     response = { message: "Erreur survenue du coté du serveur" };
     return response;
