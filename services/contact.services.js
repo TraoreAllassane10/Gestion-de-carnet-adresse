@@ -1,8 +1,9 @@
 const Contact = require("../models/Contact");
+const Corbeille = require("../models/Corbeille");
 
 const all = async (query, userId) => {
-   let response;
-   let code;
+  let response;
+  let code;
 
   //Pagination
   const page = parseInt(query.page) || 1;
@@ -21,108 +22,123 @@ const all = async (query, userId) => {
     response = { totalContact, totalPages, page, contacts };
     code = 200;
 
-    return {code, response};
-
+    return { code, response };
   } catch (error) {}
 };
 
 const find = async (id, userId) => {
-   let response;
-   let code;
+  let response;
+  let code;
 
-   const contact = await Contact.findById(id);
+  const contact = await Contact.findById(id);
 
-   if (contact) {
+  if (contact) {
     if (contact.user?.toString() !== userId) {
-        response = { message: "Vous n'etes pas authorisé à acceder à ce contact" };
-        code = 403;
-        return {code, response};
+      response = {
+        message: "Vous n'etes pas authorisé à acceder à ce contact",
+      };
+      code = 403;
+      return { code, response };
     }
 
     code = 200;
-    response = {contact}
-    return {code, response};
-
-    } else {
-        
-        response = { message: "Contact introuvable" };
-        code = 404;
-        return {code, response};
-    }
-}
+    response = { contact };
+    return { code, response };
+  } else {
+    response = { message: "Contact introuvable" };
+    code = 404;
+    return { code, response };
+  }
+};
 
 const create = async (data) => {
-    let response;
-    let code;
+  let response;
+  let code;
 
-    try {
-        const contact = await Contact.create(data);
-        response = {message : "Contact enregistré", Contact: contact};
-        code = 201;
+  try {
+    const contact = await Contact.create(data);
+    response = { message: "Contact enregistré", Contact: contact };
+    code = 201;
 
-        return { code, response };
-    } catch (error) {
-        response = {message : "Erreur survenue du coté du serveur"};
-        code = 500;
-        return { code, response };
-    }
-}
+    return { code, response };
+  } catch (error) {
+    response = { message: "Erreur survenue du coté du serveur" };
+    code = 500;
+    return { code, response };
+  }
+};
 
 const update = async (id, userId, data) => {
-    let response;
-    let code;
+  let response;
+  let code;
 
-    const contact = await Contact.findByIdAndUpdate(id, data, {
-        new: true,
-      });
-    
-      if (contact) {
-        if (contact.user?.toString() !== userId) {
-            response = { message: "Vous n'etes pas authorisé à acceder à ce contact" };
-            code = 403;
-          return {code, response};
-        }
-    
-        response = { message: "Contact modifié", contact: contact};
-        code = 200;
-        return {code, response};
+  const contact = await Contact.findByIdAndUpdate(id, data, {
+    new: true,
+  });
 
-      } else {
-        response = { message: "Contact introuvable"};
-        code = 404;
-        return {code, response};
-      }
-}
+  if (contact) {
+    if (contact.user?.toString() !== userId) {
+      response = {
+        message: "Vous n'etes pas authorisé à acceder à ce contact",
+      };
+      code = 403;
+      return { code, response };
+    }
+
+    response = { message: "Contact modifié", contact: contact };
+    code = 200;
+    return { code, response };
+  } else {
+    response = { message: "Contact introuvable" };
+    code = 404;
+    return { code, response };
+  }
+};
 
 const remove = async (id, userId) => {
-    const contact = await Contact.findByIdAndDelete(id);
-    let response;
-    let code;
+  const contact = await Contact.findByIdAndDelete(id);
+  let response;
+  let code;
 
-    if (contact) {
-        if (contact.user?.toString() !== userId) {
-            response = { message: "Vous n'etes pas authorisé à acceder à ce contact" };
-            code = 403;
-           
-            return {code, response};
-        }
+  if (contact) {
+    if (contact.user?.toString() !== userId) {
+      response = {
+        message: "Vous n'etes pas authorisé à acceder à ce contact",
+      };
+      code = 403;
 
-        response = { message: "Contact supprimé", contact: contact };
-        code = 200;
-
-       return {code, response};
-    } else {
-        response = { message: "Contact introuvable" , contact: contact };
-        code = 404;
-
-       return {code, response};
+      return { code, response };
     }
-}
+
+    //Corbeille : Envoie du contact à la corbeille
+    //Constitution du data sans _id du contact à supprimer, avant l'envoie à la corbeille
+    const contactDeleted = {
+      firstname: contact.firstname,
+      lastname: contact.lastname,
+      email : contact.email,
+      phone : contact.phone,
+      user : contact.user
+    };
+
+    //Enregistrement du contact dans la corbeille apres suppression
+    await Corbeille.create(contactDeleted);
+
+    response = { message: "Contact supprimé", contact: contact };
+    code = 200;
+
+    return { code, response };
+  } else {
+    response = { message: "Contact introuvable", contact: contact };
+    code = 404;
+
+    return { code, response };
+  }
+};
 
 module.exports = {
-    all,
-    create,
-    find,
-    update,
-    remove
+  all,
+  create,
+  find,
+  update,
+  remove,
 };

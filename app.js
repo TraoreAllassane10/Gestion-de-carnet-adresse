@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const contactRoutes = require('./routes/contact.routes');
 const userRoutes = require('./routes/user.routes');
 const adminRoutes = require('./routes/admin.routes');
+const favorisRoutes = require('./routes/favoris.routes');
+const corbeilleRoutes = require('./routes/corbeille.routes');
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +23,8 @@ mongoose.connect('mongodb://localhost/carnet-adresses');
 app.use('/contacts', contactRoutes);
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);
+app.use('/favoris', favorisRoutes);
+app.use('/corbeilles', corbeilleRoutes);
 
 app.use((req, res) => {
     res.status(404).send('Page introuvable');
